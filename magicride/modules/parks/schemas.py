@@ -5,18 +5,25 @@ Serialization schemas for Park resources RESTful API
 """
 
 from magicride.extensions import db
+from magicride.modules.businesshours.schemas import BaseBusinessHoursSchema
+from magicride.modules.operators.schemas import BaseOperatorSchema
 from magicride.modules.parks.models import Park
-from magicride.modules.parks.serializers import GeographySerializer, OperatorSerializer, \
-                                                BusinessHoursSerializer, GeoConverter
+from magicride.modules.parks.serializers import GeographySerializer, GeoConverter
+from magicride.modules.rides.schemas import RideNoReviews
 from utilities import ModelSchema
+from flask_marshmallow import base_fields
 
 
 class BaseParkSchema(ModelSchema):
     location = GeographySerializer(attribute='location')
-    operator = OperatorSerializer(attribute='operator')
-    business_hours = BusinessHoursSerializer(attribute='business_hours')
+    operating_hours = base_fields.Nested(BaseBusinessHoursSchema)
+    operator = base_fields.Nested(BaseOperatorSchema)
+    rides = base_fields.Nested(RideNoReviews, many=True)
 
     class Meta:
         model = Park
         sqla_session = db.session
         model_converter = GeoConverter
+        exclude = (
+            Park.is_active.key,
+        )

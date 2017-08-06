@@ -6,6 +6,7 @@ from magicride.modules.geo.models import Location
 from magicride.modules.rides.models import Ride
 from magicride.modules.sponsors.models import Sponsor
 
+
 park_sponsors = db.Table('park_sponsors',
                          db.Column('park_id',
                                    db.Integer,
@@ -50,7 +51,7 @@ class Park(ResourceMixin, db.Model):
                                passive_deletes=True)
 
     rides = db.relationship(Ride,
-                            backref='parks',
+                            backref='park',
                             lazy='dynamic',
                             passive_deletes=True)
 
@@ -71,8 +72,8 @@ class Park(ResourceMixin, db.Model):
     @classmethod
     def get_all(cls):
         """
-        Retrieve all Parks.
+        Retrieve all active Parks.
 
         :return: Park instance
         """
-        return Park.query.all()
+        return Park.query.filter(Park.is_active == True).all()
