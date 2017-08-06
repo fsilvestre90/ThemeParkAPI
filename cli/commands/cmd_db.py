@@ -9,11 +9,14 @@ from sqlalchemy_utils import database_exists, create_database
 from magicride import create_app
 from magicride.extensions import db
 
-from magicride.modules.parks.models import Operator, Park, BusinessHours, Location
+from magicride.modules.parks.models import Park
 from magicride.modules.rides.models import Ride, RideType
 from magicride.modules.bookmarks.models import Bookmark
 from magicride.modules.users.models import User
 from magicride.modules.reviews.models import Review
+from magicride.modules.operators.models import Operator
+from magicride.modules.businesshours.models import BusinessHours
+from magicride.modules.geo.models import Location
 
 
 # Create an app context for the database connection.
@@ -99,7 +102,8 @@ def parks():
                 'address': address,
                 'location': location,
                 'admission_price': price,
-                'operator_id': operator.id
+                'operator_id': operator.id,
+                'business_hours': 1
             }
 
             data.append(params)
@@ -134,21 +138,15 @@ def businesshours():
     """
     data = []
     with app.app_context():
-        parks = db.session.query(Park).all()
-        for park in parks:
-            start = datetime.time(10, 00, 00)
-            close = datetime.time(20, 00, 00)
-            day_of_week = 1111111
-            park_id = park.id
+        start = datetime.time(10, 00, 00)
+        close = datetime.time(20, 00, 00)
 
-            params = {
-                'start_time': start,
-                'close_time': close,
-                'days_opened': day_of_week,
-                'park_id': park_id
-            }
+        params = {
+            'opening_time': start,
+            'closing_time': close,
+        }
 
-            data.append(params)
+        data.append(params)
 
         return _bulk_insert(BusinessHours, data, 'business_hours')
 
@@ -241,8 +239,8 @@ def reset(ctx, with_testdb):
     """
     ctx.invoke(init, with_testdb=with_testdb)
     ctx.invoke(operators)
-    ctx.invoke(parks)
     ctx.invoke(businesshours)
+    ctx.invoke(parks)
     ctx.invoke(ridetypes)
     ctx.invoke(rides)
     return None
