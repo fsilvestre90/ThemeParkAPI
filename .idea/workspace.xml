@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="535d22e3-3029-410d-8cd7-60697ba6cb7a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/rides/schemas.py" afterPath="$PROJECT_DIR$/magicride/modules/rides/schemas.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +17,8 @@
       <file leaf-file-name="schemas.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/magicride/modules/parks/schemas.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="35" column="21" lean-forward="false" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="21" />
+            <state relative-caret-position="256">
+              <caret line="35" column="17" lean-forward="false" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
               <folding>
                 <element signature="e#133#168#0" expanded="true" />
               </folding>
@@ -25,11 +26,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="resources.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="resources.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/magicride/modules/parks/resources.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+            <state relative-caret-position="297">
+              <caret line="31" column="24" lean-forward="true" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -44,6 +45,18 @@
               <caret line="36" column="15" lean-forward="false" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="15" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="schemas.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/magicride/modules/rides/schemas.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -97,9 +110,9 @@
         <option value="$PROJECT_DIR$/magicride/modules/rides/resources.py" />
         <option value="$PROJECT_DIR$/magicride/modules/rides/models.py" />
         <option value="$PROJECT_DIR$/magicride/extensions/api/__init__.py" />
-        <option value="$PROJECT_DIR$/magicride/modules/rides/schemas.py" />
         <option value="$PROJECT_DIR$/magicride/modules/parks/schemas.py" />
         <option value="$PROJECT_DIR$/magicride/modules/parks/resources.py" />
+        <option value="$PROJECT_DIR$/magicride/modules/rides/schemas.py" />
       </list>
     </option>
   </component>
@@ -151,6 +164,13 @@
               <item name="magicride" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
               <item name="parks" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="theme_park" type="b2602c69:ProjectViewProjectNode" />
+              <item name="theme_park" type="462c0819:PsiDirectoryNode" />
+              <item name="magicride" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="rides" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="theme_park" type="b2602c69:ProjectViewProjectNode" />
@@ -549,12 +569,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/magicride/modules/rides/schemas.py">
+    <entry file="file://$PROJECT_DIR$/magicride/modules/parks/resources.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="20" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="20" />
+        <state relative-caret-position="297">
+          <caret line="31" column="24" lean-forward="true" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
           <folding>
-            <element signature="e#0#47#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/magicride/modules/parks/schemas.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="35" column="17" lean-forward="false" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
+          <folding>
+            <element signature="e#133#168#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -569,22 +599,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/magicride/modules/parks/schemas.py">
+    <entry file="file://$PROJECT_DIR$/magicride/modules/rides/schemas.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="35" column="21" lean-forward="false" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="21" />
+        <state relative-caret-position="225">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
-            <element signature="e#133#168#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/magicride/modules/parks/resources.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
