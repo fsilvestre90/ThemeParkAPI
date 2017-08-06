@@ -11,7 +11,7 @@ from magicride.modules.parks.models import Park, Location
 log = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 parks_ns = api_v1.namespace(
-    'parks', description="Bathroom operations")  # pylint: disable=invalid-name
+    'parks', description="Park operations")  # pylint: disable=invalid-name
 
 
 @parks_ns.route('/')
