@@ -58,9 +58,6 @@ class Park(ResourceMixin, db.Model):
                             backref='parks',
                             lazy='dynamic')
 
-    # reviews = db.relationship('reviews', backref='reviews',
-    #                           lazy='dynamic')
-
     def __init__(self, **kwargs):
         location = Location(latitude=kwargs.get('lat', 0),
                             longitude=kwargs.get('lng', 0))
