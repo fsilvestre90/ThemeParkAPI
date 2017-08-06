@@ -1,6 +1,7 @@
 from magicride.extensions import db
 from magicride.extensions.api.util_sqlalchemy import ResourceMixin
 from magicride.modules.reviews.models import Review
+from magicride.modules.bookmarks.models import Bookmark
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import or_
 
@@ -13,8 +14,8 @@ class User(ResourceMixin, db.Model):
     reviews = db.relationship(Review, backref='users',
                               passive_deletes=True)
 
-    # bookmarks = db.relationship(Bookmark, backref='users',
-    #                                   passive_deletes=True)
+    bookmarks = db.relationship(Bookmark, backref='users',
+                                passive_deletes=True)
 
     # Authentication
     username = db.Column(db.String(24), unique=True, index=True)
