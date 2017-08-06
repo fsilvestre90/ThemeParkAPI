@@ -37,7 +37,7 @@ class ParkByID(Resource):
 
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
-    def delete(self, team):
+    def delete(self, park):
         """
         Delete a park by ID.
         """
@@ -45,12 +45,12 @@ class ParkByID(Resource):
                 db.session,
                 default_error_message="Failed to delete the park."
         ):
-            parks_ns.session.delete(team)
+            parks_ns.session.delete(park)
         return None
 
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
-    def put(self, team):
+    def put(self, park):
         """
         Update a park by ID.
         """
@@ -58,7 +58,7 @@ class ParkByID(Resource):
                 db.session,
                 default_error_message="Failed to update the park."
         ):
-            parks_ns.session.merge(team)
+            parks_ns.session.merge(park)
         return None
 
 
