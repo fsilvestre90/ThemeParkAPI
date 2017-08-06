@@ -24,7 +24,7 @@ class BusinessHours(db.Model):
     start_time = db.Column(db.Time, nullable=False)
     close_time = db.Column(db.Time, nullable=False)
     park_id = db.Column(db.Integer, db.ForeignKey(
-        'parks.id', onupdate="CASCADE", ondelete="CASCADE"))
+        'parks.id', index=True, onupdate="CASCADE", ondelete="CASCADE"))
 
 
 class Sponsor(db.Model):
@@ -39,24 +39,30 @@ class Park(ResourceMixin, db.Model):
     name = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
     location = db.Column('location', Geometry(geometry_type='POINT'))
-    is_active = db.Column(db.Boolean, default=True, nullable=False)
+    is_active = db.Column(db.Boolean, server_default=True, nullable=False)
     admission_price = db.Column(db.Float, nullable=False)
+
+    # Relationships
     operator_id = db.Column(db.Integer, db.ForeignKey('operators.id',
                                                       onupdate="CASCADE",
-                                                      ondelete="CASCADE"))
+                                                      ondelete="CASCADE"),
+                            index=True, nullable=False)
 
     business_hours = db.relationship(BusinessHours,
                                      backref="parks",
-                                     lazy='dynamic')
+                                     lazy='dynamic',
+                                     passive_deletes=True)
 
     sponsors = db.relationship(Sponsor,
                                secondary=park_sponsors,
                                backref='park_sponsors',
-                               lazy='dynamic')
+                               lazy='dynamic',
+                               passive_deletes=True)
 
     rides = db.relationship(Ride,
                             backref='parks',
-                            lazy='dynamic')
+                            lazy='dynamic',
+                            passive_deletes=True)
 
     def __init__(self, **kwargs):
         location = Location(latitude=kwargs.get('lat', 0),

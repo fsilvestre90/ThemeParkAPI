@@ -9,7 +9,10 @@ class Review(ResourceMixin, db.Model):
     rating = db.Column(db.Integer, nullable=False)
     ride_id = db.Column(db.Integer, db.ForeignKey('rides.id',
                                                   onupdate="CASCADE",
-                                                  ondelete="CASCADE"))
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id',
-    #                                               onupdate="CASCADE",
-    #                                               ondelete="CASCADE"))
+                                                  ondelete="CASCADE"),
+                        index=True, nullable=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',
+                                                  onupdate="CASCADE",
+                                                  ondelete="CASCADE"),
+                        index=True, nullable=False)
