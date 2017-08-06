@@ -3,12 +3,6 @@
 API extension
 =============
 """
-from copy import deepcopy
-
-from flask import Blueprint, current_app
-
-from .api import Api
-from .namespace import Namespace
 from .http_exceptions import abort
 from .api import Api
 

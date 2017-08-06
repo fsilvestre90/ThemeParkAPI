@@ -4,7 +4,7 @@ from magicride.extensions import db
 from magicride.extensions.api import api_v1
 from magicride.modules.geo import parameters
 from magicride.modules.geo.models import Location
-from magicride.modules.parks import schemas
+from magicride.modules.parks.schemas import ParkSchema, ParkRidesSchema
 from magicride.modules.parks.models import Park
 from utilities import Resource
 from utilities._http import HTTPStatus
@@ -17,7 +17,7 @@ parks_ns = api_v1.namespace(
 
 @parks_ns.route('/')
 class AllParks(Resource):
-    @parks_ns.response(schemas.BaseParkSchema(many=True))
+    @parks_ns.response(ParkSchema(many=True))
     def get(self):
         """
         Get all parks.
@@ -28,7 +28,7 @@ class AllParks(Resource):
 @parks_ns.route('/<int:park_id>')
 @parks_ns.resolve_object_by_model(Park, 'park')
 class ParkByID(Resource):
-    @parks_ns.response(schemas.BaseParkSchema())
+    @parks_ns.response(ParkSchema())
     def get(self, park):
         """
         Get park details by ID.
@@ -48,11 +48,61 @@ class ParkByID(Resource):
             parks_ns.session.delete(team)
         return None
 
+    @parks_ns.response(code=HTTPStatus.CONFLICT)
+    @parks_ns.response(code=HTTPStatus.NO_CONTENT)
+    def put(self, team):
+        """
+        Update a park by ID.
+        """
+        with parks_ns.commit_or_abort(
+                db.session,
+                default_error_message="Failed to update the park."
+        ):
+            parks_ns.session.merge(team)
+        return None
+
+
+@parks_ns.route('/<int:park_id>/rides')
+@parks_ns.resolve_object_by_model(Park, 'park')
+class RideByParkID(Resource):
+    @parks_ns.response(ParkRidesSchema(), many=True)
+    def get(self, park):
+        """
+        Get all park rides.
+        """
+        return park
+
+    @parks_ns.response(code=HTTPStatus.CONFLICT)
+    @parks_ns.response(code=HTTPStatus.NO_CONTENT)
+    def delete(self, ride):
+        """
+        Delete a park ride by ID.
+        """
+        with parks_ns.commit_or_abort(
+                db.session,
+                default_error_message="Failed to delete the ride."
+        ):
+            parks_ns.session.delete(ride)
+        return None
+
+    @parks_ns.response(code=HTTPStatus.CONFLICT)
+    @parks_ns.response(code=HTTPStatus.NO_CONTENT)
+    def put(self, ride):
+        """
+        Update a ride by ID.
+        """
+        with parks_ns.commit_or_abort(
+                db.session,
+                default_error_message="Failed to update the ride."
+        ):
+            parks_ns.session.merge(ride)
+        return None
+
 
 @parks_ns.route('/nearest')
 class ParksByLocation(Resource):
     @parks_ns.parameters(parameters.GeocodeParameters())
-    @parks_ns.response(schemas.BaseParkSchema(many=True))
+    @parks_ns.response(ParkSchema(many=True))
     def get(self, args):
         """
         Get parks by geocoordinates.

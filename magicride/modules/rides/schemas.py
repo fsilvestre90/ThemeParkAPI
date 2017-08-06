@@ -5,10 +5,6 @@ from utilities import ModelSchema
 class BaseRideSchema(ModelSchema):
     class Meta:
         model = Ride
-        exclude = (
-            Ride.id.key,
-            Ride.park.key,
-        )
 
 
 class RideNoReviews(BaseRideSchema):
