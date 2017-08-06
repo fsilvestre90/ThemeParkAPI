@@ -12,6 +12,7 @@ from .model import Model, DefaultHTTPErrorSchema
 
 
 class Namespace(OriginalNamespace):
+
     WEBARGS_PARSER = webargs_parser
 
     def _handle_api_doc(self, cls, doc):
@@ -44,7 +45,6 @@ class Namespace(OriginalNamespace):
         ...    def get(self, user):
         ...        # user is a User instance here
         """
-
         def decorator(func_or_class):
             if isinstance(func_or_class, type):
                 # Handle Resource classes decoration
@@ -56,9 +56,7 @@ class Namespace(OriginalNamespace):
             def wrapper(*args, **kwargs):
                 kwargs[object_arg_name] = resolver(kwargs)
                 return func_or_class(*args, **kwargs)
-
             return wrapper
-
         return decorator
 
     def model(self, name=None, model=None, mask=None, **kwargs):
@@ -77,11 +75,9 @@ class Namespace(OriginalNamespace):
         """
         Endpoint parameters registration decorator.
         """
-
         def decorator(func):
-            print(parameters)
             if locations is None and parameters.many:
-                _locations = ('json',)
+                _locations = ('json', )
             else:
                 _locations = locations
             if _locations is not None:
@@ -138,7 +134,6 @@ class Namespace(OriginalNamespace):
             This decorator handles responses to serialize the returned value
             with a given model.
             """
-
             def dump_wrapper(*args, **kwargs):
                 # pylint: disable=missing-docstring
                 response = func(*args, **kwargs)
@@ -187,10 +182,10 @@ class Namespace(OriginalNamespace):
                     api_model = [api_model]
 
             doc_decorator = self.doc(
-                responses={
-                    code.value: (description, api_model)
-                }
-            )
+                    responses={
+                            code.value: (description, api_model)
+                        }
+                )
             return doc_decorator(decorated_func_or_class)
 
         return decorator

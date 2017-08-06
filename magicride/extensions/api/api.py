@@ -4,7 +4,7 @@ Extended Api implementation with an application-specific helpers
 ----------------------------------------------------------------
 """
 from utilities import Api as BaseApi
-from utilities import Namespace
+from .namespace import Namespace
 
 
 class Api(BaseApi):

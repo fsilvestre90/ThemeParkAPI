@@ -68,7 +68,6 @@ class Park(ResourceMixin, db.Model):
         :param: point: a Location instance
         :return: list of parks found
         """
-        print(point.to_wkt_element())
         return db.session \
             .query(Park) \
             .filter(db.func.ST_DWithin(Park.location, point.to_wkt_element(),
