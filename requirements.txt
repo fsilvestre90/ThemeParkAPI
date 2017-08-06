@@ -1,0 +1,29 @@
+Flask>=0.11
+flask-restplus>=0.9.1,!=0.10.0
+
+# Application server for both development and production.
+gunicorn==19.4.5
+werkzeug
+Flask-CORS
+
+# Data and workers.
+Flask-SQLAlchemy==2.2
+SQLAlchemy-Utils==0.32.14
+GeoAlchemy2==0.4.0
+psycopg2
+Shapely
+marshmallow>=2.13.5
+flask-marshmallow==0.7.0
+marshmallow-sqlalchemy==0.12.0
+webargs>=1.4.0
+apispec>=0.20.0
+celery==4.0.2
+eventlet==0.21.0
+passlib==1.7.1
+arrow==0.8.0
+
+# utils
+fake-factory==0.5.7
+
+flower
+six

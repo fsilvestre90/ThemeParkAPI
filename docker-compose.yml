@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  postgres:
+    image: 'postgres:9.5'
+    env_file:
+      - '.env'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+
+  api:
+    build: ./
+    command: gunicorn -c gunicorn.py --reload "magicride:create_app()"
+    volumes:
+      - '.:/magicride'
+    ports:
+        - '8000:8000'
+    depends_on:
+      postgres
+
+volumes:
+  postgres:
