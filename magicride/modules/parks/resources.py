@@ -10,11 +10,12 @@ from magicride.modules.parks.models import Park, Location
 
 log = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
-parks_ns = api_v1.namespace('parks', description="Bathroom operations")  # pylint: disable=invalid-name
+parks_ns = api_v1.namespace(
+    'parks', description="Bathroom operations")  # pylint: disable=invalid-name
 
 
 @parks_ns.route('/')
-class BathroomsIndex(Resource):
+class ParksIndex(Resource):
 
     def get(self):
         lat = float(flask.request.args.get("lat"))
@@ -23,4 +24,5 @@ class BathroomsIndex(Resource):
         point = Location(latitude=lat, longitude=lng)
         if not point:
             raise BadRequest('Invalid coordinate parameters.')
-        return schemas.BaseParkSchema().dump(Park.get_bathrooms(point), many=True)
+        return schemas.BaseParkSchema() \
+                      .dump(Park.get_bathrooms(point), many=True)

@@ -7,6 +7,8 @@ class Review(ResourceMixin, db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     description = db.Column(db.String, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
+
+    # Relationships
     ride_id = db.Column(db.Integer, db.ForeignKey('rides.id',
                                                   onupdate="CASCADE",
                                                   ondelete="CASCADE"),

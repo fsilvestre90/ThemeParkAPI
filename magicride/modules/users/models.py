@@ -1,14 +1,21 @@
+from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import or_
+
 from magicride.extensions import db
 from magicride.extensions.api.util_sqlalchemy import ResourceMixin
 from magicride.modules.reviews.models import Review
 from magicride.modules.bookmarks.models import Bookmark
-from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import or_
 
 
 class User(ResourceMixin, db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+
+    # Authentication
+    username = db.Column(db.String(24), unique=True, index=True)
+    email = db.Column(db.String(255), unique=True, index=True, nullable=False,
+                      default='')
+    password = db.Column(db.String(128), nullable=False, default='')
 
     # Relationships
     reviews = db.relationship(Review, backref='users',
@@ -16,12 +23,6 @@ class User(ResourceMixin, db.Model):
 
     bookmarks = db.relationship(Bookmark, backref='users',
                                 passive_deletes=True)
-
-    # Authentication
-    username = db.Column(db.String(24), unique=True, index=True)
-    email = db.Column(db.String(255), unique=True, index=True, nullable=False,
-                      server_default='')
-    password = db.Column(db.String(128), nullable=False, server_default='')
 
     def __init__(self, **kwargs):
         # Call Flask-SQLAlchemy's constructor.

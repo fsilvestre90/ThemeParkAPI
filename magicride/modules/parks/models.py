@@ -11,10 +11,18 @@ from magicride.modules.rides.models import Ride
 park_sponsors = db.Table('park_sponsors',
                          db.Column('park_id',
                                    db.Integer,
-                                   db.ForeignKey('parks.id', onupdate="CASCADE", ondelete="CASCADE")),
+                                   db.ForeignKey('parks.id',
+                                                 onupdate="CASCADE",
+                                                 ondelete="CASCADE"),
+                                   index=True,
+                                   nullable=False),
                          db.Column('sponsor_id',
                                    db.Integer,
-                                   db.ForeignKey('sponsors.id', onupdate="CASCADE", ondelete="CASCADE")))
+                                   db.ForeignKey('sponsors.id',
+                                                 onupdate="CASCADE",
+                                                 ondelete="CASCADE"),
+                                   index=True,
+                                   nullable=False))
 
 
 class BusinessHours(db.Model):
@@ -23,8 +31,11 @@ class BusinessHours(db.Model):
     days_opened = db.Column(db.Integer, nullable=False)
     start_time = db.Column(db.Time, nullable=False)
     close_time = db.Column(db.Time, nullable=False)
-    park_id = db.Column(db.Integer, db.ForeignKey(
-        'parks.id', index=True, onupdate="CASCADE", ondelete="CASCADE"))
+    park_id = db.Column(db.Integer, db.ForeignKey('parks.id',
+                                                  onupdate="CASCADE",
+                                                  ondelete="CASCADE"),
+                        index=True,
+                        nullable=False)
 
 
 class Sponsor(db.Model):
@@ -39,7 +50,7 @@ class Park(ResourceMixin, db.Model):
     name = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
     location = db.Column('location', Geometry(geometry_type='POINT'))
-    is_active = db.Column(db.Boolean, server_default=True, nullable=False)
+    is_active = db.Column(db.Boolean, default=True, nullable=False)
     admission_price = db.Column(db.Float, nullable=False)
 
     # Relationships
