@@ -17,6 +17,9 @@ parks_ns = api_v1.namespace(
 class AllParks(Resource):
     @parks_ns.response(schemas.BaseParkSchema(many=True))
     def get(self):
+        """
+        Get all parks.
+        """
         return Park.get_all()
 
 
@@ -27,7 +30,7 @@ class ParkByID(Resource):
     @parks_ns.response(schemas.BaseParkSchema())
     def get(self, park):
         """
-        Get team details by ID.
+        Get park details by ID.
         """
         return park
 
@@ -37,5 +40,8 @@ class ParksByLocation(Resource):
     @parks_ns.parameters(parameters.GeocodeParameters())
     @parks_ns.response(schemas.BaseParkSchema(many=True))
     def get(self, args):
+        """
+        Get parks by geocoordinates.
+        """
         point = Location(latitude=args['latitude'], longitude=args['longitude'], radius=args['radius'])
         return Park.get_parks_by_point(point)
