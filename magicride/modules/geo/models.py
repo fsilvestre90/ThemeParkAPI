@@ -11,17 +11,18 @@ class Location(object):
     A location wrapper to help with PostGIS stuff
 
     :param latitude: a latitude
-    :type latitude: double
+    :type latitude: float
 
     :param longitude: a longitude
-    :type longitude: double
+    :type longitude: float
 
     :return: Location instance
     """
 
-    def __init__(self, latitude=None, longitude=None):
-        self.latitude = latitude
-        self.longitude = longitude
+    def __init__(self, latitude=None, longitude=None, radius=5):
+        self.latitude = float(latitude)
+        self.longitude = float(longitude)
+        self.radius = int(radius)
 
     def to_wkt(self):
         """
@@ -55,6 +56,18 @@ class Location(object):
         if srid:
             point = db.func.ST_SetSRID(point, srid)
         return point
+
+    def is_valid_latitude(self):
+        if -90.0 <= self.latitude <= 90.0:
+            return True
+        else:
+            return False
+
+    def is_valid_longitude(self):
+        if -180.0 <= self.longitude <= 180.0:
+            return True
+        else:
+            return False
 
     @staticmethod
     def from_wkb(wkb):

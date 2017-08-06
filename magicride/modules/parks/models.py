@@ -62,11 +62,17 @@ class Park(ResourceMixin, db.Model):
         super(Park, self).__init__()
 
     @classmethod
-    def get_rides_by_point(cls, point, radius):
+    def get_parks_by_point(cls, point):
+        """
+        Get parks within given coordinates and radius.
+        :param: point: a Location instance
+        :return: list of parks found
+        """
+        print(point.to_wkt_element())
         return db.session \
             .query(Park) \
             .filter(db.func.ST_DWithin(Park.location, point.to_wkt_element(),
-                                       radius)) \
+                                       point.radius)) \
             .all()
 
     @classmethod
