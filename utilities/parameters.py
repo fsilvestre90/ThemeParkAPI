@@ -123,24 +123,24 @@ class PatchJSONParameters(Parameters):
         Returns:
             processing_status (bool): True if operation was handled, otherwise False.
         """
-        field_operaion = operation['op']
+        field_operation = operation['op']
 
-        if field_operaion == cls.OP_REPLACE:
+        if field_operation == cls.OP_REPLACE:
             return cls.replace(obj, operation['field_name'], operation['value'], state=state)
 
-        elif field_operaion == cls.OP_TEST:
+        elif field_operation == cls.OP_TEST:
             return cls.test(obj, operation['field_name'], operation['value'], state=state)
 
-        elif field_operaion == cls.OP_ADD:
+        elif field_operation == cls.OP_ADD:
             return cls.add(obj, operation['field_name'], operation['value'], state=state)
 
-        elif field_operaion == cls.OP_MOVE:
+        elif field_operation == cls.OP_MOVE:
             return cls.move(obj, operation['field_name'], operation['value'], state=state)
 
-        elif field_operaion == cls.OP_COPY:
+        elif field_operation == cls.OP_COPY:
             return cls.copy(obj, operation['field_name'], operation['value'], state=state)
 
-        elif field_operaion == cls.OP_REMOVE:
+        elif field_operation == cls.OP_REMOVE:
             return cls.remove(obj, operation['field_name'], state=state)
 
         return False

@@ -5,6 +5,7 @@ from magicride.extensions.api import api_v1
 from magicride.modules.geo import parameters
 from magicride.modules.geo.models import Location
 from magicride.modules.parks.models import Park
+from magicride.modules.parks.parameters import PatchParkParameters
 from magicride.modules.parks.schemas import ParkSchema
 from magicride.modules.rides.models import Ride
 from magicride.modules.rides.parameters import PatchRideParameters
@@ -48,12 +49,14 @@ class ParkByID(Resource):
                 db.session,
                 default_error_message="Failed to delete the park."
         ):
-            parks_ns.session.delete(park)
+            db.session.delete(park)
         return None
 
+    @parks_ns.response(ParkSchema())
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
-    def put(self, park):
+    @parks_ns.parameters(PatchParkParameters())
+    def patch(self, args, park):
         """
         Update a park by ID.
         """
@@ -61,8 +64,9 @@ class ParkByID(Resource):
                 db.session,
                 default_error_message="Failed to update the park."
         ):
-            parks_ns.session.merge(park)
-        return None
+            PatchParkParameters.perform_patch(args, obj=park)
+            db.session.merge(park)
+        return park
 
 
 @parks_ns.route('/<int:park_id>/rides/<int:ride_id>')
@@ -89,14 +93,15 @@ class RideByParkID(Resource):
             db.session.delete(ride)
         return None
 
-    @parks_ns.response(BaseRideSchema(), many=True)
+    @parks_ns.response(BaseRideSchema())
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
     @parks_ns.parameters(PatchRideParameters())
-    def put(self, args, park, ride):
+    def patch(self, args, park, ride):
         """
         Update a ride by ID.
         """
+        print(args)
         with parks_ns.commit_or_abort(
                 db.session,
                 default_error_message="Failed to update the ride."
