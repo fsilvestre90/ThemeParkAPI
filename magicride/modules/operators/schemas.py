@@ -6,7 +6,6 @@ class BaseOperatorSchema(ModelSchema):
 
     class Meta:
         model = Operator
-        exclude = (
-            Operator.id.key,
-            Operator.park.key,
+        fields = (
+            Operator.name.key,
         )

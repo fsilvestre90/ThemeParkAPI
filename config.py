@@ -20,6 +20,7 @@ class BaseConfig(object):
     ENABLED_MODULES = (
         'parks',
         'users',
+        'reviews',
         'api',
     )
 

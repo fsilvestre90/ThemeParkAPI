@@ -66,8 +66,9 @@ class Park(ResourceMixin, db.Model):
         """
         Get parks within given coordinates and radius.
         :param: point: a Location instance
-        :return: list of parks found
+        :return: list of parks
         """
+        print(point.to_wkt_element())
         return db.session \
             .query(Park) \
             .filter(db.func.ST_DWithin(Park.location, point.to_wkt_element(),

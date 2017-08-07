@@ -14,7 +14,8 @@ class GeocodeParameters(Parameters):
     )
     longitude = base_fields.Float(
         description="the latitude to search in",
-        validate=validate.Range(min=-180.0, max=180.0, error="Invalid longitude parameters. Must be between -180 and 180.")
+        validate=validate.Range(min=-180.0, max=180.0,
+                                error="Invalid longitude parameters. Must be between -180 and 180.")
     )
     radius = base_fields.Float(
         description="the radius to search in",

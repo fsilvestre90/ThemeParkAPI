@@ -10,6 +10,8 @@ class User(ResourceMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
+    name = db.Column(db.String, nullable=False)
+
     # Authentication
     email = db.Column(db.String(255), unique=True, index=True, nullable=False,
                       default='')
@@ -42,6 +44,17 @@ class User(ResourceMixin, db.Model):
         if check_password_hash(user.password, password):
             return user
         return None
+
+    @classmethod
+    def find_user(cls, email):
+        """
+        :param email: email to search
+        :return: User instance, none if not found
+        """
+        user = cls.query.filter_by(email=email).first()
+        if not user:
+            return None
+        return user
 
     @classmethod
     def encrypt_password(cls, plaintext_password):

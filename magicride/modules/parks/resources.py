@@ -131,7 +131,6 @@ class RideByParkID(Resource):
 
 @parks_ns.route('/nearest')
 class ParksByLocation(Resource):
-
     @parks_ns.parameters(GeocodeParameters())
     @parks_ns.response(ParkSchema(many=True))
     def get(self, args):

@@ -5,7 +5,7 @@ from magicride.modules.parks.models import Park
 class Operator(db.Model):
     __tablename__ = 'operators'
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, index=True, nullable=False)
     park = db.relationship(Park,
                            uselist=False,
                            backref="operator")
