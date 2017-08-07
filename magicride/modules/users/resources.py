@@ -1,9 +1,11 @@
 from flask import logging
 
+from magicride.extensions import db
 from magicride.extensions.api import api_v1
 from magicride.modules.bookmarks.models import Bookmark
 from magicride.modules.reviews.models import Review
 from magicride.modules.users.models import User
+from magicride.modules.users.parameters import LoginParameters, CreateUserParameters
 from magicride.modules.users.schemas import BaseUserSchema
 from utilities import Resource
 
@@ -15,26 +17,32 @@ users_ns = api_v1.namespace(
 
 @users_ns.route('/')
 class UserByID(Resource):
-
     @users_ns.response(BaseUserSchema())
-    def get(self, user):
+    @users_ns.parameters(LoginParameters())
+    def get(self, args):
         """
         Login a user.
         """
-        return user
+        return User.find_with_password(args['email'], args['password'])
 
+    @users_ns.parameters(CreateUserParameters())
     @users_ns.response(BaseUserSchema())
-    def post(self, user):
+    def post(self, args):
         """
         Create a new user.
         """
-        return user
+        with users_ns.commit_or_abort(
+                db.session,
+                default_error_message="Failed to create a new user."
+        ):
+            new_user = User(**args)
+            db.session.add(new_user)
+        return new_user
 
 
 @users_ns.route('/<int:user_id>/reviews')
 @users_ns.resolve_object_by_model(User, 'user')
 class UserByID(Resource):
-
     @users_ns.response(BaseUserSchema())
     def post(self, user):
         """

@@ -1,5 +1,4 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import or_
 
 from magicride.extensions import db
 from magicride.extensions.api.util_sqlalchemy import ResourceMixin
@@ -12,7 +11,6 @@ class User(ResourceMixin, db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
     # Authentication
-    username = db.Column(db.String(24), unique=True, index=True)
     email = db.Column(db.String(255), unique=True, index=True, nullable=False,
                       default='')
     password = db.Column(db.String(128), nullable=False, default='')
@@ -31,16 +29,19 @@ class User(ResourceMixin, db.Model):
         self.password = User.encrypt_password(kwargs.get('password', ''))
 
     @classmethod
-    def find_by_identity(cls, identity):
+    def find_with_password(cls, email, password):
         """
-        Find a user by their e-mail or username.
+        :param email: email to search
+        :param password: password in plain text
+        :return: User instance, none if not found
+        """
+        user = cls.query.filter_by(email=email).first()
+        if not user:
+            return None
 
-        :param identity: Email or username
-        :type identity: str
-        :return: User instance
-        """
-        return User.query.filter(
-            (User.email == identity) | (User.username == identity)).first()
+        if check_password_hash(user.password, password):
+            return user
+        return None
 
     @classmethod
     def encrypt_password(cls, plaintext_password):
@@ -54,37 +55,3 @@ class User(ResourceMixin, db.Model):
             return generate_password_hash(plaintext_password)
 
         return None
-
-    def authenticated(self, with_password=True, password=''
-                      ):
-        """
-        Ensure a user is authenticated, and optionally check their password.
-
-        :param with_password: Optionally check their password
-        :type with_password: bool
-        :param password: Optionally verify this as their password
-        :type password: str
-        :return: bool
-        """
-        if with_password:
-            return check_password_hash(self.password, password)
-
-        return True
-
-    @classmethod
-    def search(cls, query):
-        """
-        Search a resource by 1 or more fields.
-
-        :param query: Search query
-        :type query: str
-        :return: SQLAlchemy filter
-        """
-        if not query:
-            return ''
-
-        search_query = '%{0}%'.format(query)
-        search_chain = (User.email.ilike(search_query),
-                        User.username.ilike(search_query))
-
-        return or_(*search_chain)

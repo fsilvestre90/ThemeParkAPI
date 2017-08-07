@@ -24,7 +24,7 @@ class PatchParkParameters(PatchJSONParameters):
 
 class CreateParkParameters(Parameters):
     """
-    Helper Parameters class to reuse geocoding.
+    Helper parameters to create a park.
     """
     latitude = base_fields.Float(
         description="the latitude to search in",
