@@ -2,17 +2,13 @@
 # pylint: disable=missing-docstring
 import logging
 
-from six import itervalues
-
 from flask_marshmallow import Schema, base_fields
 from marshmallow import validate, validates_schema, ValidationError
-
 
 log = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 
 class Parameters(Schema):
-
     class Meta:
         ordered = True
 
@@ -36,17 +32,6 @@ class Parameters(Schema):
         parameters (they can be used not only for saving new instances).
         """
         return
-
-
-class PostFormParameters(Parameters):
-
-    def __init__(self, *args, **kwargs):
-        super(PostFormParameters, self).__init__(*args, **kwargs)
-        for field in itervalues(self.fields):
-            if field.dump_only:
-                continue
-            if not field.metadata.get('location'):
-                field.metadata['location'] = 'form'
 
 
 class PatchJSONParameters(Parameters):

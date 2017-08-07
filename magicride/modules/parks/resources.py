@@ -4,9 +4,10 @@ from magicride.extensions import db
 from magicride.extensions.api import api_v1
 from magicride.modules.geo import parameters
 from magicride.modules.geo.models import Location
-from magicride.modules.parks.schemas import ParkSchema, ParkRidesSchema
 from magicride.modules.parks.models import Park
+from magicride.modules.parks.schemas import ParkSchema
 from magicride.modules.rides.models import Ride
+from magicride.modules.rides.parameters import PatchRideParameters
 from magicride.modules.rides.schemas import BaseRideSchema
 from utilities import Resource
 from utilities._http import HTTPStatus
@@ -88,9 +89,11 @@ class RideByParkID(Resource):
             db.session.delete(ride)
         return None
 
+    @parks_ns.response(BaseRideSchema(), many=True)
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
-    def put(self, park, ride):
+    @parks_ns.parameters(PatchRideParameters())
+    def put(self, args, park, ride):
         """
         Update a ride by ID.
         """
@@ -98,8 +101,9 @@ class RideByParkID(Resource):
                 db.session,
                 default_error_message="Failed to update the ride."
         ):
+            PatchRideParameters.perform_patch(args, obj=ride)
             db.session.merge(ride)
-        return None
+        return ride
 
 
 @parks_ns.route('/nearest')
