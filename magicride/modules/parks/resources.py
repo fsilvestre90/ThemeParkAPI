@@ -2,10 +2,10 @@ import logging
 
 from magicride.extensions import db
 from magicride.extensions.api import api_v1
-from magicride.modules.geo import parameters
 from magicride.modules.geo.models import Location
+from magicride.modules.geo.parameters import GeocodeParameters
 from magicride.modules.parks.models import Park
-from magicride.modules.parks.parameters import PatchParkParameters
+from magicride.modules.parks.parameters import PatchParkParameters, CreateParkParameters
 from magicride.modules.parks.schemas import ParkSchema
 from magicride.modules.rides.models import Ride
 from magicride.modules.rides.parameters import PatchRideParameters
@@ -20,7 +20,7 @@ parks_ns = api_v1.namespace(
 
 
 @parks_ns.route('/')
-class AllParks(Resource):
+class ParksIndex(Resource):
     @parks_ns.response(ParkSchema(many=True))
     def get(self):
         """
@@ -28,10 +28,20 @@ class AllParks(Resource):
         """
         return Park.get_all()
 
+    # TODO: Finish API
+    @parks_ns.parameters(CreateParkParameters())
+    @parks_ns.response(ParkSchema(many=True))
+    def post(self):
+        """
+        Add a new park.
+        """
+        return Park.get_all()
+
 
 @parks_ns.route('/<int:park_id>')
 @parks_ns.resolve_object_by_model(Park, 'park')
 class ParkByID(Resource):
+
     @parks_ns.response(ParkSchema())
     def get(self, park):
         """
@@ -56,7 +66,7 @@ class ParkByID(Resource):
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
     @parks_ns.parameters(PatchParkParameters())
-    def patch(self, args, park):
+    def put(self, args, park):
         """
         Update a park by ID.
         """
@@ -73,18 +83,26 @@ class ParkByID(Resource):
 @parks_ns.resolve_object_by_model(Park, 'park')
 @parks_ns.resolve_object_by_model(Ride, 'ride')
 class RideByParkID(Resource):
-    @parks_ns.response(BaseRideSchema(), many=True)
-    def get(self, park, ride):
+
+    # TODO: Finish endpoint
+    @parks_ns.response(code=HTTPStatus.CONFLICT)
+    @parks_ns.response(code=HTTPStatus.NO_CONTENT)
+    def put(self, park, ride):
         """
-        Get a park ride.
+        Delete a park ride by ID.
         """
-        return ride
+        with parks_ns.commit_or_abort(
+                db.session,
+                default_error_message="Failed to delete the ride."
+        ):
+            db.session.delete(ride)
+        return None
 
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
     def delete(self, park, ride):
         """
-        Delete a park ride by ID.
+        Delete a ride by ID.
         """
         with parks_ns.commit_or_abort(
                 db.session,
@@ -97,7 +115,7 @@ class RideByParkID(Resource):
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
     @parks_ns.parameters(PatchRideParameters())
-    def patch(self, args, park, ride):
+    def put(self, args, park, ride):
         """
         Update a ride by ID.
         """
@@ -113,11 +131,25 @@ class RideByParkID(Resource):
 
 @parks_ns.route('/nearest')
 class ParksByLocation(Resource):
-    @parks_ns.parameters(parameters.GeocodeParameters())
+
+    @parks_ns.parameters(GeocodeParameters())
     @parks_ns.response(ParkSchema(many=True))
     def get(self, args):
         """
         Get parks by geocoordinates.
+        """
+        point = Location(latitude=args['latitude'], longitude=args['longitude'], radius=args['radius'])
+        return Park.get_parks_by_point(point)
+
+
+# TODO: Finish endpoint
+@parks_ns.route('/path')
+class ParksByLocation(Resource):
+    @parks_ns.parameters(GeocodeParameters())
+    @parks_ns.response(ParkSchema(many=True))
+    def get(self, args):
+        """
+        Get parks along polyline path.
         """
         point = Location(latitude=args['latitude'], longitude=args['longitude'], radius=args['radius'])
         return Park.get_parks_by_point(point)
