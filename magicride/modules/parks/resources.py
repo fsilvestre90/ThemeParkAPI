@@ -6,6 +6,8 @@ from magicride.modules.geo import parameters
 from magicride.modules.geo.models import Location
 from magicride.modules.parks.schemas import ParkSchema, ParkRidesSchema
 from magicride.modules.parks.models import Park
+from magicride.modules.rides.models import Ride
+from magicride.modules.rides.schemas import BaseRideSchema
 from utilities import Resource
 from utilities._http import HTTPStatus
 
@@ -62,19 +64,20 @@ class ParkByID(Resource):
         return None
 
 
-@parks_ns.route('/<int:park_id>/rides')
+@parks_ns.route('/<int:park_id>/rides/<int:ride_id>')
 @parks_ns.resolve_object_by_model(Park, 'park')
+@parks_ns.resolve_object_by_model(Ride, 'ride')
 class RideByParkID(Resource):
-    @parks_ns.response(ParkRidesSchema(), many=True)
-    def get(self, park):
+    @parks_ns.response(BaseRideSchema(), many=True)
+    def get(self, park, ride):
         """
-        Get all park rides.
+        Get a park ride.
         """
-        return park
+        return ride
 
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
-    def delete(self, ride):
+    def delete(self, park, ride):
         """
         Delete a park ride by ID.
         """
@@ -82,12 +85,12 @@ class RideByParkID(Resource):
                 db.session,
                 default_error_message="Failed to delete the ride."
         ):
-            parks_ns.session.delete(ride)
+            db.session.delete(ride)
         return None
 
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
-    def put(self, ride):
+    def put(self, park, ride):
         """
         Update a ride by ID.
         """
@@ -95,7 +98,7 @@ class RideByParkID(Resource):
                 db.session,
                 default_error_message="Failed to update the ride."
         ):
-            parks_ns.session.merge(ride)
+            db.session.merge(ride)
         return None
 
 

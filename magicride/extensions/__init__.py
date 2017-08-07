@@ -19,7 +19,7 @@ force_instant_defaults()
 
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
+db = SQLAlchemy(session_options={'autocommit': True})
 
 
 def init_app(app):
