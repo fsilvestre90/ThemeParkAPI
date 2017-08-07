@@ -19,7 +19,7 @@ class GeographySerializer(fields.String):
         if value is None:
             return value
         else:
-            if attr == 'average_rating':
+            if attr == 'location':
                 return {'latitude': db.session.scalar(func.ST_X(value)),
                         'longitude': db.session.scalar(func.ST_Y(value))}
             else:
