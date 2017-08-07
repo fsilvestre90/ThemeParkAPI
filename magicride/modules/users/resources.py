@@ -8,6 +8,7 @@ from magicride.modules.users.models import User
 from magicride.modules.users.parameters import LoginParameters, CreateUserParameters
 from magicride.modules.users.schemas import BaseUserSchema
 from utilities import Resource
+from utilities._http import HTTPStatus
 
 log = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -16,14 +17,7 @@ users_ns = api_v1.namespace(
 
 
 @users_ns.route('/')
-class UserByID(Resource):
-    @users_ns.response(BaseUserSchema())
-    @users_ns.parameters(LoginParameters())
-    def get(self, args):
-        """
-        Login a user.
-        """
-        return User.find_with_password(args['email'], args['password'])
+class UsersIndex(Resource):
 
     @users_ns.parameters(CreateUserParameters())
     @users_ns.response(BaseUserSchema())
@@ -40,9 +34,22 @@ class UserByID(Resource):
         return new_user
 
 
+@users_ns.route('/login')
+class UserLogin(Resource):
+    @users_ns.response(BaseUserSchema())
+    @users_ns.parameters(LoginParameters())
+    @users_ns.response(code=HTTPStatus.CONFLICT)
+    @users_ns.response(code=HTTPStatus.NO_CONTENT)
+    def post(self, args):
+        """
+        Login a user.
+        """
+        print(args)
+        return User.find_with_password(args['email'], args['password'])
+
 @users_ns.route('/<int:user_id>/reviews')
 @users_ns.resolve_object_by_model(User, 'user')
-class UserByID(Resource):
+class ReviewsByUserID(Resource):
     @users_ns.response(BaseUserSchema())
     def post(self, user):
         """
@@ -72,7 +79,7 @@ class BookmarkByUserID(Resource):
 
 @users_ns.route('/<int:user_id>/bookmarks')
 @users_ns.resolve_object_by_model(User, 'user')
-class BookmarkByUserID(Resource):
+class SubmitBookmarkByUserID(Resource):
     @users_ns.response(BaseUserSchema())
     def post(self, user):
         """
@@ -81,10 +88,10 @@ class BookmarkByUserID(Resource):
         return user
 
 
-@users_ns.route('/<int:user_id>/bookmarks/<int:bookmark_id')
+@users_ns.route('/<int:user_id>/bookmarks/<int:bookmark_id>')
 @users_ns.resolve_object_by_model(User, 'user')
 @users_ns.resolve_object_by_model(Bookmark, 'bookmark')
-class BookmarkByUserID(Resource):
+class EditBookmarkByUserID(Resource):
     @users_ns.response(BaseUserSchema())
     def put(self, user, bookmark):
         """

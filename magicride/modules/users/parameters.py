@@ -1,8 +1,9 @@
-from utilities import Parameters
 from flask_marshmallow import base_fields
 
+from utilities import PostFormParameters
 
-class LoginParameters(Parameters):
+
+class LoginParameters(PostFormParameters):
     """
     Helper parameters to login user.
     """
@@ -14,7 +15,7 @@ class LoginParameters(Parameters):
     )
 
 
-class CreateUserParameters(Parameters):
+class CreateUserParameters(PostFormParameters):
     """
     Helper parameters to create user.
     """

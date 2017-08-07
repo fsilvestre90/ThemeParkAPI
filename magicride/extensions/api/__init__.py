@@ -15,3 +15,4 @@ api_v1 = Api(  # pylint: disable=invalid-name
 
 def init_app(app, **kwargs):
     pass
+
