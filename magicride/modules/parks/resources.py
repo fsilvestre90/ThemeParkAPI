@@ -41,7 +41,6 @@ class ParksIndex(Resource):
 @parks_ns.route('/<int:park_id>')
 @parks_ns.resolve_object_by_model(Park, 'park')
 class ParkByID(Resource):
-
     @parks_ns.response(ParkSchema())
     def get(self, park):
         """
@@ -83,7 +82,6 @@ class ParkByID(Resource):
 @parks_ns.resolve_object_by_model(Park, 'park')
 @parks_ns.resolve_object_by_model(Ride, 'ride')
 class RideByParkID(Resource):
-
     # TODO: Finish endpoint
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
@@ -135,20 +133,15 @@ class ParksByLocation(Resource):
     @parks_ns.response(ParkSchema(many=True))
     def get(self, args):
         """
-        Get parks by geocoordinates.
+        Get parks by geolocation.
         """
-        point = Location(latitude=args['latitude'], longitude=args['longitude'], radius=args['radius'])
-        return Park.get_parks_by_point(point)
 
-
-# TODO: Finish endpoint
-@parks_ns.route('/path')
-class ParksByLocation(Resource):
-    @parks_ns.parameters(GeocodeParameters())
-    @parks_ns.response(ParkSchema(many=True))
-    def get(self, args):
-        """
-        Get parks along polyline path.
-        """
-        point = Location(latitude=args['latitude'], longitude=args['longitude'], radius=args['radius'])
-        return Park.get_parks_by_point(point)
+        # Perform a filter on the search type
+        search_type = args['search']
+        if 'point' in search_type:
+            radius = int(args['radius'])
+            point = Location(latitude=args['latitude'], longitude=args['longitude'])
+            return Park.get_parks_by_point(point, radius=radius)
+        elif 'path' in search_type:
+            points = [Location(coordinate.latitude, coordinate.longitude) for coordinate in args['coordinates']]
+            return Park.get_poi_along_path(points, args['radius'])

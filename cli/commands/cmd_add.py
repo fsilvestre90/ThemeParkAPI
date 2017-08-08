@@ -7,7 +7,10 @@ from faker import Faker
 
 from magicride import create_app
 from magicride.extensions import db
-from magicride.modules.parks.models import Operator, Park, BusinessHours, Location
+from magicride.modules.businesshours.models import BusinessHours
+from magicride.modules.geo.models import Location
+from magicride.modules.operators.models import Operator
+from magicride.modules.parks.models import Park
 from magicride.modules.rides.models import Ride, RideType
 
 # Create an app context for the database connection.
@@ -48,6 +51,7 @@ def _bulk_insert(model, data, label):
     :return: None
     """
     with app.app_context():
+        db.session.begin()
         model.query.delete()
 
         db.session.commit()
@@ -97,6 +101,45 @@ def parks():
             
         return _bulk_insert(Park, data, 'parks')
 
+@click.command()
+def test_poly():
+    """
+    Generate random ridetypes.
+    """
+    lines = []
+    lines.append(Location(37.31917, -122.04511))
+    lines.append(Location(37.35247, -122.06396))
+    lines.append(Location(37.38412, -122.02139))
+    lines.append(Location(37.36994, -121.9953))
+    lines.append(Location(37.34374, -121.97607))
+    """
+    Generate random parks.
+    """
+    data = []
+    num_of_rides = len(lines) - 1
+
+    click.echo('Working on test parks...')
+    with app.app_context():
+        while num_of_rides >= 0:
+            location = lines.pop()
+            park_name = "test - " + fake.city()
+            address = fake.address()
+            location = location.to_wkt()
+            price = round(random.uniform(50, 150), 2)
+
+            params = {
+                'name': park_name,
+                'address': address,
+                'location': location,
+                'admission_price': price,
+                'operator_id': 1,
+                'business_hours': 1
+            }
+
+            data.append(params)
+            num_of_rides -= 1
+
+        return _bulk_insert(Park, data, 'parks')
 
 @click.command()
 def operators():
@@ -219,4 +262,5 @@ cli.add_command(parks)
 cli.add_command(businesshours)
 cli.add_command(rides)
 cli.add_command(ridetypes)
+cli.add_command(test_poly)
 cli.add_command(all)

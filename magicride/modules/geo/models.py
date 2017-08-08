@@ -1,7 +1,8 @@
 import math
 
 from geoalchemy2 import WKTElement
-from geoalchemy2.shape import to_shape
+from geoalchemy2.shape import to_shape, from_shape
+from shapely.geometry import LineString
 
 from magicride.extensions import db
 
@@ -19,10 +20,9 @@ class Location(object):
     :return: Location instance
     """
 
-    def __init__(self, latitude=None, longitude=None, radius=5):
+    def __init__(self, latitude=None, longitude=None):
         self.latitude = float(latitude)
         self.longitude = float(longitude)
-        self.radius = int(radius)
 
     def to_wkt(self):
         """
@@ -136,3 +136,27 @@ class BoundingBox(object):
             box = db.func.ST_SetSRID(box, srid)
 
         return box
+
+
+class RoutePaths(object):
+    """
+    A line wrapper to help with line stuff
+
+    :param paths: a list of coordinates
+    :type paths: list
+    :return: RoutePaths instance
+    """
+    def __init__(self, paths=None):
+        # Convert the coordinate into a list of tuples
+        if paths is None:
+            paths = []
+        paths = paths
+        coordinates = [(c.longitude, c.latitude) for c in paths]
+
+        # Create a shapely LineString object from the coordinates
+        linestring = LineString(coordinates)
+
+        # Save the new path as WKB
+        self.locations = from_shape(linestring)
+
+        super(RoutePaths, self).__init__()
