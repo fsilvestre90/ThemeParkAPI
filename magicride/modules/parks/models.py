@@ -112,7 +112,9 @@ class Park(ResourceMixin, db.Model):
         return db.session.query(
             func.ST_AsText(
                 func.ST_Line_Interpolate_Point(
-                    sub_query.c.line_geom, func.ST_Line_Locate_Point(sub_query.c.line_geom, sub_query.c.point_geom)))) \
+                    sub_query.c.line_geom,
+                    func.ST_Line_Locate_Point(sub_query.c.line_geom,
+                                              sub_query.c.point_geom)))) \
             .all()
 
     @classmethod
