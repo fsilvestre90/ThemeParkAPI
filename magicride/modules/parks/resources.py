@@ -163,5 +163,5 @@ class ParksByLocation(Resource):
             point = Location(latitude=args['latitude'], longitude=args['longitude'])
             return Park.get_parks_by_point(point, radius=radius)
         elif 'path' in search_type:
-            points = [Location(coordinate[0], coordinate[1]) for coordinate in args['coordinates']]
+            points = [Location(latitude=coordinate[0], longitude=coordinate[1]) for coordinate in args['coordinates']]
             return Park.get_poi_along_path(points, args['radius'])

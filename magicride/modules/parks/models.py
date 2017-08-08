@@ -1,5 +1,5 @@
 from geoalchemy2 import Geometry
-from sqlalchemy import func
+from sqlalchemy import func, desc
 
 from magicride.extensions import db
 from magicride.extensions.api.util_sqlalchemy import ResourceMixin
@@ -78,23 +78,11 @@ class Park(ResourceMixin, db.Model):
     @classmethod
     def get_poi_along_path(cls, lines, radius=5):
         """
-        SELECT 
-            ST_AsText(
-                ST_line_interpolate_point(
-                    line_geom,
-                    ST_line_locate_point(line_geom, point_geom)
-                )
-            )
-        FROM
-        (
-            SELECT
-                linestring AS line_geom,
-                park.location AS point_geom
-            FROM
-                park
-            WHERE
-                ST_DWithin(linestring, park.location, 5)
-        ) AS sub_query;
+        SELECT park.*
+        FROM park
+        WHERE ST_DWithin(line.geom, park.geom, radius)
+        ORDER BY ST_Line_Locate_Point(line.geom, park.geom),
+                 ST_Distance(line.geom, park.geom);
         
         :param lines: an array of locations
         :param radius: the search radius     
@@ -102,29 +90,13 @@ class Park(ResourceMixin, db.Model):
         """
         linestring = RoutePaths(paths=lines)
 
-        sub_query = db.session.query(
-            Park.id.label("park"),
-            linestring.locations.label("line_geom"),
-            Park.location.label("point_geom")) \
+        return db.session.query(Park) \
             .filter(func.ST_DWithin(linestring.locations,
                                     Park.location,
                                     radius)) \
-            .subquery()
-
-        # return db.session.query(
-        #     sub_query.c.park,
-        #     func.ST_AsText(
-        #         func.ST_Line_Interpolate_Point(
-        #             sub_query.c.line_geom,
-        #             func.ST_Line_Locate_Point(sub_query.c.line_geom,
-        #                                       sub_query.c.point_geom)))) \
-        #     .subquery()
-
-        return db.session.query(Park) \
-            .filter(func.ST_Line_Interpolate_Point(
-                    sub_query.c.line_geom,
-                    func.ST_Line_Locate_Point(sub_query.c.line_geom,
-                                              sub_query.c.point_geom)) == Park.location).all()
+            .order_by(
+                    desc(func.ST_Line_Locate_Point(linestring.locations, Park.location)),
+                    desc(func.ST_Distance(linestring.locations, Park.location)))
 
     @classmethod
     def get_all(cls):

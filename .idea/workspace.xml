@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="535d22e3-3029-410d-8cd7-60697ba6cb7a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/magicride/modules/sponsors/schemas.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cli/commands/cmd_db.py" afterPath="$PROJECT_DIR$/cli/commands/cmd_db.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/geo/models.py" afterPath="$PROJECT_DIR$/magicride/modules/geo/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/geo/parameters.py" afterPath="$PROJECT_DIR$/magicride/modules/geo/parameters.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cli/commands/cmd_add.py" afterPath="$PROJECT_DIR$/cli/commands/cmd_add.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/parks/models.py" afterPath="$PROJECT_DIR$/magicride/modules/parks/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/parks/parameters.py" afterPath="$PROJECT_DIR$/magicride/modules/parks/parameters.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/parks/resources.py" afterPath="$PROJECT_DIR$/magicride/modules/parks/resources.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/parks/schemas.py" afterPath="$PROJECT_DIR$/magicride/modules/parks/schemas.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/parks/serializers.py" afterPath="$PROJECT_DIR$/magicride/modules/parks/serializers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/sponsors/models.py" afterPath="$PROJECT_DIR$/magicride/modules/sponsors/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magicride/modules/users/parameters.py" afterPath="$PROJECT_DIR$/magicride/modules/users/parameters.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,34 +16,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="resources.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/magicride/modules/parks/resources.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="388">
+              <caret line="166" column="37" lean-forward="true" selection-start-line="166" selection-start-column="37" selection-end-line="166" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/magicride/modules/parks/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="73" column="59" lean-forward="false" selection-start-line="73" selection-start-column="59" selection-end-line="73" selection-end-column="59" />
+            <state relative-caret-position="2">
+              <caret line="79" column="11" lean-forward="false" selection-start-line="79" selection-start-column="11" selection-end-line="79" selection-end-column="11" />
               <folding>
-                <element signature="e#0#32#0" expanded="true" />
+                <element signature="e#0#43#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/magicride/modules/geo/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="34" column="22" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shape.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/geoalchemy2/shape.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="617">
-              <caret line="50" column="41" lean-forward="false" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="50" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -109,7 +91,6 @@
         <option value="$PROJECT_DIR$/magicride/extensions/api/namespace.py" />
         <option value="$PROJECT_DIR$/magicride/extensions/api/api.py" />
         <option value="$PROJECT_DIR$/magicride/modules/rides/resources.py" />
-        <option value="$PROJECT_DIR$/magicride/extensions/__init__.py" />
         <option value="$PROJECT_DIR$/magicride/modules/rides/parameters.py" />
         <option value="$PROJECT_DIR$/utilities/__init__.py" />
         <option value="$PROJECT_DIR$/magicride/modules/bookmarks/__init__.py" />
@@ -118,7 +99,6 @@
         <option value="$PROJECT_DIR$/magicride/extensions/api/__init__.py" />
         <option value="$PROJECT_DIR$/utilities/parameters.py" />
         <option value="$PROJECT_DIR$/magicride/modules/reviews/parameters.py" />
-        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/magicride/modules/users/models.py" />
         <option value="$PROJECT_DIR$/utilities/_http.py" />
         <option value="$PROJECT_DIR$/magicride/modules/users/resources.py" />
@@ -131,7 +111,6 @@
         <option value="$PROJECT_DIR$/magicride/modules/rides/models.py" />
         <option value="$PROJECT_DIR$/magicride/modules/rides/schemas.py" />
         <option value="$PROJECT_DIR$/utilities/sql.py" />
-        <option value="$PROJECT_DIR$/cli/commands/cmd_add.py" />
         <option value="$PROJECT_DIR$/magicride/modules/users/parameters.py" />
         <option value="$PROJECT_DIR$/cli/commands/cmd_db.py" />
         <option value="$PROJECT_DIR$/magicride/modules/geo/parameters.py" />
@@ -142,15 +121,18 @@
         <option value="$PROJECT_DIR$/magicride/modules/sponsors/models.py" />
         <option value="$PROJECT_DIR$/magicride/modules/sponsors/schemas.py" />
         <option value="$PROJECT_DIR$/magicride/modules/parks/schemas.py" />
-        <option value="$PROJECT_DIR$/magicride/modules/parks/resources.py" />
         <option value="$PROJECT_DIR$/magicride/modules/geo/models.py" />
+        <option value="$PROJECT_DIR$/cli/commands/cmd_add.py" />
+        <option value="$PROJECT_DIR$/magicride/modules/parks/resources.py" />
+        <option value="$PROJECT_DIR$/magicride/extensions/__init__.py" />
+        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/magicride/modules/parks/models.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="55" />
-    <option name="y" value="23" />
+    <option name="x" value="42" />
+    <option name="y" value="95" />
     <option name="width" value="1087" />
     <option name="height" value="858" />
   </component>
@@ -178,11 +160,6 @@
             <path>
               <item name="theme_park" type="b2602c69:ProjectViewProjectNode" />
               <item name="theme_park" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="theme_park" type="b2602c69:ProjectViewProjectNode" />
-              <item name="theme_park" type="462c0819:PsiDirectoryNode" />
-              <item name="cli" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="theme_park" type="b2602c69:ProjectViewProjectNode" />
@@ -256,7 +233,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="23" width="1087" height="858" extended-state="0" />
+    <frame x="42" y="95" width="1087" height="858" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -265,7 +242,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29357797" sideWeight="0.4970545" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29226735" sideWeight="0.4970545" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17799044" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884097" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -393,14 +370,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/magicride/extensions/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="9" column="58" lean-forward="false" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utilities/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -460,14 +429,6 @@
           <folding>
             <element signature="e#54#68#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="22" column="18" lean-forward="false" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -579,26 +540,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/magicride/extensions/api/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="6" lean-forward="false" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/shapely/geometry/linestring.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="29" column="8" lean-forward="false" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_add.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1744">
-          <caret line="108" column="4" lean-forward="true" selection-start-line="108" selection-start-column="4" selection-end-line="113" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -631,14 +576,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="109">
           <caret line="22" column="10" lean-forward="false" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="96" column="65" lean-forward="true" selection-start-line="96" selection-start-column="65" selection-end-line="96" selection-end-column="65" />
           <folding />
         </state>
       </provider>
@@ -706,7 +643,7 @@
         <state relative-caret-position="60">
           <caret line="4" column="6" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
           <folding>
-            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -727,36 +664,76 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/magicride/modules/parks/resources.py">
+    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="49" column="46" lean-forward="false" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="46" />
+        <state relative-caret-position="-471">
+          <caret line="96" column="65" lean-forward="true" selection-start-line="96" selection-start-column="65" selection-end-line="96" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/magicride/extensions/api/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="9" column="6" lean-forward="false" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/magicride/extensions/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="21" column="52" lean-forward="false" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/geoalchemy2/shape.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="617">
-          <caret line="50" column="41" lean-forward="false" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="50" />
+        <state relative-caret-position="-114">
+          <caret line="16" column="12" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/magicride/modules/geo/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="34" column="22" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="22" />
+        <state relative-caret-position="164">
+          <caret line="34" column="8" lean-forward="false" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_add.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="112" column="26" lean-forward="true" selection-start-line="112" selection-start-column="26" selection-end-line="112" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/magicride/modules/parks/resources.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="166" column="37" lean-forward="true" selection-start-line="166" selection-start-column="37" selection-end-line="166" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/magicride/modules/parks/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="73" column="59" lean-forward="false" selection-start-line="73" selection-start-column="59" selection-end-line="73" selection-end-column="59" />
+        <state relative-caret-position="2">
+          <caret line="79" column="11" lean-forward="false" selection-start-line="79" selection-start-column="11" selection-end-line="79" selection-end-column="11" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>

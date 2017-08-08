@@ -124,7 +124,7 @@ def test_poly():
             location = lines.pop()
             park_name = "test - " + fake.city()
             address = fake.address()
-            location = location.to_wkt()
+            location = location.to_wkt_element()
             price = round(random.uniform(50, 150), 2)
 
             params = {
