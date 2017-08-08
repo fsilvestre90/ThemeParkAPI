@@ -5,6 +5,12 @@ from magicride.extensions.api.util_sqlalchemy import ResourceMixin
 from magicride.modules.reviews.models import Review
 
 
+class RideType(ResourceMixin, db.Model):
+    __tablename__ = 'ride_types'
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    ride_type = db.Column(db.String, nullable=False)
+
+
 class Ride(ResourceMixin, db.Model):
     __tablename__ = 'rides'
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
@@ -24,6 +30,8 @@ class Ride(ResourceMixin, db.Model):
                                                   ondelete="CASCADE"),
                         index=True, nullable=False)
 
+    ride_type = db.relationship(RideType, foreign_keys=[ride_type_id])
+
     reviews = db.relationship(Review, backref='rides',
                               lazy='dynamic',
                               passive_deletes=True)
@@ -33,12 +41,3 @@ class Ride(ResourceMixin, db.Model):
             func.avg(Review.rating).label("average_rating")
         ).filter(Review.ride_id == self.id).first()
         self.average_rating = round(new_rating[0], 1)
-
-
-class RideType(ResourceMixin, db.Model):
-    __tablename__ = 'ride_types'
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    ride_type = db.Column(db.String, nullable=False)
-    ride = db.relationship(Ride,
-                           uselist=False,
-                           backref="ride_type")

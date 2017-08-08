@@ -1,5 +1,5 @@
 from magicride.modules.rides.models import Ride
-from utilities import PatchJSONParameters
+from utilities import PatchJSONParameters, Parameters
 
 
 class PatchRideParameters(PatchJSONParameters):

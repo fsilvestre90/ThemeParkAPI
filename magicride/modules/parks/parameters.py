@@ -54,3 +54,4 @@ class CreateParkParameters(Parameters):
     admission_price = base_fields.Float(
         validate=validate.Range(min=0.0, error="Invalid price parameters. Must be greater than or equal to$0.")
     )
+

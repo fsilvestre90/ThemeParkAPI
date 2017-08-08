@@ -21,3 +21,4 @@ class BaseRideSchema(ModelSchema):
             Ride.park.key,
             Ride.reviews.key
         )
+

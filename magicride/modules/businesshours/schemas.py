@@ -8,5 +8,4 @@ class BaseBusinessHoursSchema(ModelSchema):
         model = BusinessHours
         exclude = (
             BusinessHours.id.key,
-            BusinessHours.park.key,
         )
