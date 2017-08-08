@@ -57,6 +57,17 @@ class User(ResourceMixin, db.Model):
         return user
 
     @classmethod
+    def find_by_id(cls, id):
+        """
+        :param id: id to search
+        :return: User instance, none if not found
+        """
+        user = cls.query.filter_by(id=id).first()
+        if not user:
+            return None
+        return user
+
+    @classmethod
     def encrypt_password(cls, plaintext_password):
         """
         Hash a plaintext string using PBKDF2.

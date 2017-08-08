@@ -41,3 +41,14 @@ class Ride(ResourceMixin, db.Model):
             func.avg(Review.rating).label("average_rating")
         ).filter(Review.ride_id == self.id).first()
         self.average_rating = round(new_rating[0], 1)
+
+    @classmethod
+    def find_by_id(cls, id):
+        """
+        :param id: id to search
+        :return: Ride instance, none if not found
+        """
+        ride = cls.query.filter_by(id=id).first()
+        if not ride:
+            return None
+        return ride
