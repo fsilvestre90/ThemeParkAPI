@@ -27,16 +27,30 @@ class CreateParkParameters(Parameters):
     Helper parameters to create a park.
     """
     latitude = base_fields.Float(
-        description="the latitude to search in",
         validate=validate.Range(min=-90.0, max=90.0, error="Invalid latitude parameters. Must be between -90 and 90.")
     )
     longitude = base_fields.Float(
-        description="the latitude to search in",
         validate=validate.Range(min=-180.0, max=180.0,
                                 error="Invalid longitude parameters. Must be between -180 and 180.")
     )
-    radius = base_fields.Float(
-        description="the radius to search in",
-        missing=5,
+    name = base_fields.String(
         validate=validate.Range(min=0)
+    )
+    address = base_fields.String(
+        validate=validate.Range(min=0)
+    )
+    operator = base_fields.String(
+        validate=validate.Range(min=0)
+    )
+    sponsors = base_fields.List(
+        cls_or_instance=base_fields.String()
+    )
+    opening_time = base_fields.String(
+        validate=validate.Range(min=0)
+    )
+    closing_time = base_fields.String(
+        validate=validate.Range(min=0)
+    )
+    admission_price = base_fields.Float(
+        validate=validate.Range(min=0.0, error="Invalid price parameters. Must be greater than or equal to$0.")
     )

@@ -2,14 +2,17 @@ import logging
 
 from magicride.extensions import db
 from magicride.extensions.api import api_v1
+from magicride.modules.businesshours.models import BusinessHours
 from magicride.modules.geo.models import Location
 from magicride.modules.geo.parameters import GeocodeParameters
+from magicride.modules.operators.models import Operator
 from magicride.modules.parks.models import Park
 from magicride.modules.parks.parameters import PatchParkParameters, CreateParkParameters
 from magicride.modules.parks.schemas import ParkSchema
 from magicride.modules.rides.models import Ride
 from magicride.modules.rides.parameters import PatchRideParameters
 from magicride.modules.rides.schemas import BaseRideSchema
+from magicride.modules.sponsors.models import Sponsor
 from utilities import Resource
 from utilities._http import HTTPStatus
 
@@ -28,14 +31,31 @@ class ParksIndex(Resource):
         """
         return Park.get_all()
 
-    # TODO: Finish API
     @parks_ns.parameters(CreateParkParameters())
-    @parks_ns.response(ParkSchema(many=True))
-    def post(self):
+    @parks_ns.response(ParkSchema())
+    def post(self, args):
         """
         Add a new park.
         """
-        return Park.get_all()
+        park = Park()
+        park.name = args['name']
+        park.address = args['address']
+        park.admission_price = args['admission_price']
+        park.operator_id = db.session.query(Operator.id).filter(Operator.name == args['operator']).first()
+
+        business_hours = BusinessHours(opening_time=args['opening_time'], closing_time=args['closing_time'])
+        location = Location(latitude=args['latitude'], longitude=args['longitude'])
+        park.location = location.to_wkt_element()
+        park.operating_hours = business_hours
+        sponsors = Sponsor.find_if_none_create(args['sponsors'])
+        park.sponsors = sponsors
+        with parks_ns.commit_or_abort(
+                db.session,
+                default_error_message="Failed to create the park."
+        ):
+            db.session.add(park)
+
+        return park
 
 
 @parks_ns.route('/<int:park_id>')
@@ -131,7 +151,7 @@ class RideByParkID(Resource):
 class ParksByLocation(Resource):
     @parks_ns.parameters(GeocodeParameters())
     @parks_ns.response(ParkSchema(many=True))
-    def get(self, args):
+    def post(self, args):
         """
         Get parks by geolocation.
         """
@@ -143,5 +163,5 @@ class ParksByLocation(Resource):
             point = Location(latitude=args['latitude'], longitude=args['longitude'])
             return Park.get_parks_by_point(point, radius=radius)
         elif 'path' in search_type:
-            points = [Location(coordinate.latitude, coordinate.longitude) for coordinate in args['coordinates']]
+            points = [Location(coordinate[0], coordinate[1]) for coordinate in args['coordinates']]
             return Park.get_poi_along_path(points, args['radius'])

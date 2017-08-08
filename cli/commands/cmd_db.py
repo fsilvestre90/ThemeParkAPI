@@ -94,8 +94,7 @@ def parks():
             operator = random.choice(operators)
             park_name = operator.name + " - " + fake.city()
             address = fake.address()
-            location = Location(
-                fake.latitude(), fake.longitude()).to_wkt_element()
+            location = Location(fake.latitude(), fake.longitude()).to_wkt_element()
             price = round(random.uniform(50, 150), 2)
 
             params = {

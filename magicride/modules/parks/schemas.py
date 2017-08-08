@@ -10,6 +10,7 @@ from magicride.modules.operators.schemas import BaseOperatorSchema
 from magicride.modules.parks.models import Park
 from magicride.modules.parks.serializers import GeographySerializer, GeoConverter
 from magicride.modules.rides.schemas import BaseRideSchema
+from magicride.modules.sponsors.schemas import BaseSponsorSchema
 from utilities import ModelSchema
 from flask_marshmallow import base_fields
 
@@ -18,6 +19,7 @@ class BaseParkSchema(ModelSchema):
     location = GeographySerializer(attribute='location')
     operating_hours = base_fields.Nested(BaseBusinessHoursSchema)
     operator = base_fields.Nested(BaseOperatorSchema)
+    sponsors = base_fields.Nested(BaseSponsorSchema(many=True))
     rides = base_fields.Nested(BaseRideSchema, many=True)
 
     class Meta:

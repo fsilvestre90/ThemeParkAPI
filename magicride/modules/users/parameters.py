@@ -20,7 +20,7 @@ class CreateUserParameters(Parameters):
     """
     Helper parameters to create user.
     """
-    name=base_fields.String(
+    name = base_fields.String(
         description="the users name"
     )
     email = base_fields.Email(

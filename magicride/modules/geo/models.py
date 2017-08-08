@@ -156,7 +156,7 @@ class RoutePaths(object):
         # Create a shapely LineString object from the coordinates
         linestring = LineString(coordinates)
 
-        # Save the new path as WKB
-        self.locations = from_shape(linestring)
+        # Convert the new path as WKB
+        self.locations = from_shape(linestring, srid=4326)
 
         super(RoutePaths, self).__init__()

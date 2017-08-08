@@ -29,7 +29,7 @@ class Park(ResourceMixin, db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
-    location = db.Column('location', Geometry(geometry_type='POINT'))
+    location = db.Column('location', Geometry(geometry_type='POINT', srid=4326))
     is_active = db.Column(db.Boolean, default=True, nullable=False)
     admission_price = db.Column(db.Float, nullable=False)
 
@@ -71,7 +71,7 @@ class Park(ResourceMixin, db.Model):
         return db.session \
             .query(Park) \
             .filter(db.func.ST_DWithin(Park.location,
-                                       point.to_wkt(),
+                                       point.to_wkt_element(),
                                        radius)) \
             .all()
 
@@ -102,20 +102,29 @@ class Park(ResourceMixin, db.Model):
         """
         linestring = RoutePaths(paths=lines)
 
-        sub_query = db.session.query(linestring.locations.label("line_geom"),
-                                     Park.location.label("point_geom")) \
+        sub_query = db.session.query(
+            Park.id.label("park"),
+            linestring.locations.label("line_geom"),
+            Park.location.label("point_geom")) \
             .filter(func.ST_DWithin(linestring.locations,
                                     Park.location,
                                     radius)) \
             .subquery()
 
-        return db.session.query(
-            func.ST_AsText(
-                func.ST_Line_Interpolate_Point(
+        # return db.session.query(
+        #     sub_query.c.park,
+        #     func.ST_AsText(
+        #         func.ST_Line_Interpolate_Point(
+        #             sub_query.c.line_geom,
+        #             func.ST_Line_Locate_Point(sub_query.c.line_geom,
+        #                                       sub_query.c.point_geom)))) \
+        #     .subquery()
+
+        return db.session.query(Park) \
+            .filter(func.ST_Line_Interpolate_Point(
                     sub_query.c.line_geom,
                     func.ST_Line_Locate_Point(sub_query.c.line_geom,
-                                              sub_query.c.point_geom)))) \
-            .all()
+                                              sub_query.c.point_geom)) == Park.location).all()
 
     @classmethod
     def get_all(cls):

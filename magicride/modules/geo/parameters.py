@@ -11,9 +11,13 @@ class GeocodeParameters(Parameters):
     search = base_fields.String(
         description="the type of query we want to search",
     )
-    coordinates = base_fields.String(
+    coordinates = base_fields.List(
+        cls_or_instance=base_fields.List(
+            cls_or_instance=base_fields.Float()
+        ),
         allow_none=True,
         description="the list of coordinates",
+        validate=validate.Range(min=2)
     )
     latitude = base_fields.Float(
         allow_none=True,

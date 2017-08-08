@@ -20,8 +20,8 @@ class GeographySerializer(fields.String):
             return value
         else:
             if attr == 'location':
-                return {'latitude': db.session.scalar(func.ST_X(value)),
-                        'longitude': db.session.scalar(func.ST_Y(value))}
+                return {'longitude': db.session.scalar(func.ST_X(value)),
+                        'latitude': db.session.scalar(func.ST_Y(value))}
             else:
                 return None
 
