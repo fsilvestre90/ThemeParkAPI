@@ -4,6 +4,7 @@ from magicride.extensions import db
 from magicride.extensions.api import api_v1
 from magicride.modules.bookmarks.models import Bookmark
 from magicride.modules.reviews.models import Review
+from magicride.modules.reviews.schemas import ReviewSchema
 from magicride.modules.rides.models import Ride
 from magicride.modules.users.models import User
 from magicride.modules.users.parameters import LoginParameters, CreateUserParameters, CreateReviewParameters
@@ -56,14 +57,56 @@ class UserLogin(Resource):
 class ReviewsByUserID(Resource):
     @users_ns.response(BaseUserSchema())
     def get(self, user):
-
+        """
+        Get all reviews by user
+        :param user:
+        :return:
+        """
         return user
+
+
+@users_ns.route('/<int:user_id>/reviews/<int:ride_id>')
+@users_ns.resolve_object_by_model(User, 'user')
+@users_ns.resolve_object_by_model(Ride, 'ride')
+@users_ns.response(
+    code=HTTPStatus.NOT_FOUND,
+    description="User or ride not found.",
+)
+class CreateReview(Resource):
+    @users_ns.parameters(CreateReviewParameters())
+    @users_ns.response(ReviewSchema())
+    def post(self, args, user, ride):
+        """
+        Create a new review.
+        """
+
+        with users_ns.commit_or_abort(
+                db.session,
+                default_error_message="Failed to create a new review."
+        ):
+            # submit new review
+            new_review = Review()
+            new_review.user_id = user.id,
+            new_review.ride_id = ride.id,
+            new_review.description = args['description'],
+            new_review.rating = args['rating']
+
+            db.session.add(new_review)
+
+            # update ride average rating
+            ride = db.session.query(Ride).filter(Ride.id == new_review.ride_id).first()
+            ride.update_average_rating()
+            return new_review
 
 
 @users_ns.route('/<int:user_id>/reviews/<int:review_id>')
 @users_ns.resolve_object_by_model(User, 'user')
 @users_ns.resolve_object_by_model(Review, 'review')
-class BookmarkByUserID(Resource):
+@users_ns.response(
+    code=HTTPStatus.NOT_FOUND,
+    description="User or review not found.",
+)
+class EditReviewsByUserID(Resource):
     @users_ns.response(BaseUserSchema())
     def put(self, user, review):
         """

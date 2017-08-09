@@ -6,7 +6,7 @@ class BaseConfig(object):
     SECRET_KEY = 'securepassword'
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-    SQLALCHEMY_DATABASE_URI = 'postgresql:///magicride'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://:@localhost/magicride'
 
     DEBUG = False
     ERROR_404_HELP = False
@@ -16,11 +16,10 @@ class BaseConfig(object):
     CSRF_ENABLED = False
 
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-
+    SQLALCHEMY_POOL_TIMEOUT = 1
     ENABLED_MODULES = (
         'parks',
         'users',
-        'reviews',
         'api',
     )
 

@@ -141,7 +141,8 @@ def _combine_filters(query, filters):
             query = query.filter(and_(Park.admission_price <= value))
         elif 'ride_type' in attr:
             filter_ride_list = [item.encode('UTF8') for item in value]
-            query = query.filter(and_(RideType.ride_type.in_(filter_ride_list)))
+            for i in filter_ride_list:
+                query = query.filter(and_(RideType.ride_type.in_(filter_ride_list)))
         elif 'min_height_in_cm' in attr:
             query = query.filter(and_(Ride.min_height_in_cm <= value))
     return query

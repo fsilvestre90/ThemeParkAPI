@@ -18,7 +18,6 @@ from magicride.modules.operators.models import Operator
 from magicride.modules.businesshours.models import BusinessHours
 from magicride.modules.geo.models import Location
 
-
 # Create an app context for the database connection.
 app = create_app()
 db.app = app
@@ -29,6 +28,7 @@ fake = Faker()
 def cli():
     """ Run PostgreSQL related tasks. """
     pass
+
 
 def _log_status(count, model_label):
     """
@@ -121,7 +121,6 @@ def operators():
     operators = ['Disney', 'Six Flags', 'Universal Studios']
 
     for op in operators:
-
         params = {
             'name': op
         }
@@ -160,7 +159,6 @@ def ridetypes():
     ride_types = ['Roller Coaster', 'Ferris Wheel', 'Animatronic']
 
     for ride in ride_types:
-
         params = {
             'ride_type': ride
         }
@@ -234,6 +232,7 @@ def reset(ctx, with_testdb):
     """
     Init and seed automatically.
 
+    :param ctx: app context
     :param with_testdb: Create a test database
     :return: None
     """

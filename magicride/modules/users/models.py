@@ -18,10 +18,10 @@ class User(ResourceMixin, db.Model):
     password = db.Column(db.String(128), nullable=False, default='')
 
     # Relationships
-    reviews = db.relationship(Review, backref='users',
+    reviews = db.relationship(Review, backref='reviews',
                               passive_deletes=True)
 
-    bookmarks = db.relationship(Bookmark, backref='users',
+    bookmarks = db.relationship(Bookmark, backref='bookmarks',
                                 passive_deletes=True)
 
     def __init__(self, **kwargs):

@@ -2,7 +2,7 @@ version: '2'
 
 services:
   postgres:
-    image: 'postgres:9.5'
+    image: 'mdillon/postgis:latest'
     env_file:
       - '.env'
     volumes:
@@ -13,12 +13,14 @@ services:
   api:
     build: ./
     command: gunicorn -c gunicorn.py --reload "magicride:create_app()"
+    env_file:
+      - '.env'
     volumes:
       - '.:/magicride'
     ports:
         - '8000:8000'
     depends_on:
-      postgres
+      - postgres
 
 volumes:
   postgres:

@@ -112,25 +112,12 @@ class ParkByID(Resource):
 @parks_ns.resolve_object_by_model(Park, 'park')
 @parks_ns.resolve_object_by_model(Ride, 'ride')
 class RideByParkID(Resource):
-    # TODO: Finish endpoint
-    @parks_ns.response(code=HTTPStatus.CONFLICT)
-    @parks_ns.response(code=HTTPStatus.NO_CONTENT)
-    def put(self, park, ride):
-        """
-        Delete a park ride by ID.
-        """
-        with parks_ns.commit_or_abort(
-                db.session,
-                default_error_message="Failed to delete the ride."
-        ):
-            db.session.delete(ride)
-        return None
 
     @parks_ns.response(code=HTTPStatus.CONFLICT)
     @parks_ns.response(code=HTTPStatus.NO_CONTENT)
     def delete(self, park, ride):
         """
-        Delete a ride by ID.
+        Delete ride from a park.
         """
         with parks_ns.commit_or_abort(
                 db.session,
@@ -151,7 +138,8 @@ class RideByParkID(Resource):
                 db.session,
                 default_error_message="Failed to update the ride."
         ):
-            PatchRideParameters.perform_patch(args, obj=ride)
+            # update the ride model, then merge to db
+
             db.session.merge(ride)
         return ride
 
@@ -177,7 +165,7 @@ class ParksByLocation(Resource):
         if 'point' in search_type:
             radius = int(args['radius'])
             point = Location(latitude=args['latitude'], longitude=args['longitude'])
-            return Park.get_parks_by_point(point, radius=radius, filters=args['filters'])
+            return Park.get_parks_by_point(point, radius=radius, filters=filters)
         elif 'path' in search_type:
             points = [Location(latitude=coordinate[0], longitude=coordinate[1]) for coordinate in args['coordinates']]
             return Park.get_poi_along_path(points, args['radius'], filters=filters)
